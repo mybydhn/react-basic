@@ -1,12 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
-
-ReactDOM.render(<App />, document.getElementById('root'));
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+import React,{Component} from 'react';
+import ReactDOM,{render} from 'react-dom';
+class Clock extends Component{
+    state = {
+        time:new Date().toLocaleString()
+    }
+    componentDidMount() {
+        this.timer = setInterval(()=>{
+            this.setState({time: new Date().toLocaleString()})
+        },1000)
+    }
+    componentWillUnmount() {
+        clearInterval(this.timer);
+    }
+    handleClick=()=>{
+        ReactDOM.unmountComponentAtNode(window.root);
+    }
+    render() {
+        return <h1 onClick={this.handleClick}>{this.state.time}</h1>
+    }
+}
+render(<Clock></Clock>,document.getElementById('root'));
